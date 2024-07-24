@@ -1,0 +1,149 @@
+[gd_scene load_steps=9 format=3 uid="uid://d0i4uxh4ugsfg"]
+
+[ext_resource type="PackedScene" uid="uid://b3sb2vcxpskcw" path="res://scenes/entities/player.tscn" id="1_1y16y"]
+[ext_resource type="Script" path="res://scenes/worlds/level.gd" id="1_x0usd"]
+[ext_resource type="PackedScene" uid="uid://c4kulqwpmitxb" path="res://scenes/worlds/game_over.tscn" id="2_g38cx"]
+[ext_resource type="PackedScene" uid="uid://besa2l7t8hfxn" path="res://scenes/entities/enemy.tscn" id="2_rd3db"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0vsy"]
+size = Vector2(26, 487)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2up3n"]
+size = Vector2(39, 493)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yaad"]
+bg_color = Color(0.462291, 0.462291, 0.462291, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ifu5v"]
+bg_color = Color(1, 0, 0, 1)
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_x0usd")
+_game_over_scene = ExtResource("2_g38cx")
+
+[node name="Player" parent="." instance=ExtResource("1_1y16y")]
+position = Vector2(360, 420)
+
+[node name="Enemy" parent="." instance=ExtResource("2_rd3db")]
+position = Vector2(369, 89)
+velocity = Vector2(250, 0)
+
+[node name="Enemy2" parent="." instance=ExtResource("2_rd3db")]
+position = Vector2(176, 33)
+velocity = Vector2(-250, 0)
+metadata/_edit_group_ = true
+
+[node name="Enemy3" parent="." instance=ExtResource("2_rd3db")]
+position = Vector2(556, 138)
+velocity = Vector2(-250, 0)
+metadata/_edit_group_ = true
+
+[node name="Enemy4" parent="." instance=ExtResource("2_rd3db")]
+position = Vector2(279, 198)
+velocity = Vector2(250, 0)
+metadata/_edit_group_ = true
+
+[node name="Enemy5" parent="." instance=ExtResource("2_rd3db")]
+position = Vector2(434, 249)
+velocity = Vector2(-250, 0)
+
+[node name="Enemy6" parent="." instance=ExtResource("2_rd3db")]
+position = Vector2(176, 295)
+velocity = Vector2(250, 0)
+
+[node name="ScreenBorders" type="Node2D" parent="."]
+
+[node name="LeftBorder" type="StaticBody2D" parent="ScreenBorders"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenBorders/LeftBorder"]
+position = Vector2(-14, 242.5)
+shape = SubResource("RectangleShape2D_r0vsy")
+
+[node name="RightBorder" type="StaticBody2D" parent="ScreenBorders"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenBorders/RightBorder"]
+position = Vector2(739.5, 239.5)
+shape = SubResource("RectangleShape2D_2up3n")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HealthDisplay" type="MarginContainer" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Healthbar" type="ProgressBar" parent="UI/HealthDisplay"]
+custom_minimum_size = Vector2(160, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_2yaad")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ifu5v")
+value = 66.0
+rounded = true
+show_percentage = false
+
+[node name="ScoreDisplay" type="MarginContainer" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -49.0
+offset_right = 49.0
+offset_bottom = 46.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 10
+
+[node name="ScoreLabel" type="Label" parent="UI/ScoreDisplay"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 26
+text = "Score: 0"
+
+[node name="PauseUI" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="UI/PauseUI"]
+layout_mode = 0
+offset_right = 720.0
+offset_bottom = 480.0
+color = Color(0, 0, 0, 0.427451)
+
+[node name="CenterContainer" type="VBoxContainer" parent="UI/PauseUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 311.5
+offset_top = 151.5
+offset_right = 368.5
+offset_bottom = 288.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CountdownLabel" type="Label" parent="UI/PauseUI/CenterContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 100
+text = "3"
+
+[node name="Label" type="Label" parent="UI/PauseUI/CenterContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Press <SPACE> or <CLICK> to shoot"
+
+[node name="StartCountdown" type="Timer" parent="UI/PauseUI/CenterContainer"]
+process_mode = 3
+
+[connection signal="timeout" from="UI/PauseUI/CenterContainer/StartCountdown" to="." method="_on_start_timer_timeout"]

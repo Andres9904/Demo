@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="LaserStats" load_steps=2 format=3 uid="uid://u67td408whay"]
+
+[ext_resource type="Script" path="res://scripts/resources/laser_stats.gd" id="1_swxq0"]
+
+[resource]
+script = ExtResource("1_swxq0")
+damage = 1
+color = Color(0.999904, 0.416703, 0.348032, 1)
+speed = 1000
+collision_layer = 2
+collision_mask = 1

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://s86uepx7c75l"]
+
+[ext_resource type="Script" path="res://scenes/entities/laser_cannon.gd" id="1_bb3dx"]
+
+[node name="LaserCannon" type="Node2D"]
+script = ExtResource("1_bb3dx")
+
+[node name="CooldownTimer" type="Timer" parent="."]
+one_shot = true

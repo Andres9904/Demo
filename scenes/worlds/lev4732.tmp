@@ -1,0 +1,81 @@
+[gd_scene load_steps=8 format=3 uid="uid://d0i4uxh4ugsfg"]
+
+[ext_resource type="PackedScene" uid="uid://b3sb2vcxpskcw" path="res://scenes/entities/player.tscn" id="1_1y16y"]
+[ext_resource type="Script" path="res://scenes/worlds/level.gd" id="1_x0usd"]
+[ext_resource type="PackedScene" uid="uid://besa2l7t8hfxn" path="res://scenes/entities/enemy.tscn" id="2_rd3db"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0vsy"]
+size = Vector2(26, 487)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2up3n"]
+size = Vector2(39, 493)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yaad"]
+bg_color = Color(0.462291, 0.462291, 0.462291, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ifu5v"]
+bg_color = Color(1, 0, 0, 1)
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_x0usd")
+
+[node name="Player" parent="." instance=ExtResource("1_1y16y")]
+position = Vector2(360, 420)
+
+[node name="Enemy" parent="." instance=ExtResource("2_rd3db")]
+position = Vector2(378, 156)
+velocity = Vector2(250, 0)
+
+[node name="ScreenBorders" type="Node2D" parent="."]
+
+[node name="LeftBorder" type="StaticBody2D" parent="ScreenBorders"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenBorders/LeftBorder"]
+position = Vector2(-14, 242.5)
+shape = SubResource("RectangleShape2D_r0vsy")
+
+[node name="RightBorder" type="StaticBody2D" parent="ScreenBorders"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenBorders/RightBorder"]
+position = Vector2(739.5, 239.5)
+shape = SubResource("RectangleShape2D_2up3n")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ScoreDisplay" type="MarginContainer" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -30.5
+offset_right = 30.5
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 10
+
+[node name="ScoreLabel" type="Label" parent="UI/ScoreDisplay"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Score: 0"
+
+[node name="HealthDisplay" type="MarginContainer" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Healthbar" type="ProgressBar" parent="UI/HealthDisplay"]
+custom_minimum_size = Vector2(160, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_2yaad")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ifu5v")
+value = 66.0
+rounded = true
+show_percentage = false

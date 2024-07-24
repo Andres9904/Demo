@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://dr6d68qgrdy2j"]
+
+[ext_resource type="Script" path="res://scenes/entities/laser.gd" id="1_ldppy"]
+[ext_resource type="Script" path="res://scenes/components/damagebox_component.gd" id="2_pxbvc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1kqwc"]
+size = Vector2(10, 20)
+
+[node name="Laser" type="Node2D"]
+script = ExtResource("1_ldppy")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -5.0
+offset_top = -10.0
+offset_right = 5.0
+offset_bottom = 10.0
+color = Color(0.992157, 0.823529, 0, 1)
+
+[node name="DamageboxComponent" type="Area2D" parent="."]
+script = ExtResource("2_pxbvc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageboxComponent"]
+shape = SubResource("RectangleShape2D_1kqwc")
+
+[connection signal="deal_damage_event" from="DamageboxComponent" to="." method="_on_deal_damage_event"]
