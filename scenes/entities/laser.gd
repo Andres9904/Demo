@@ -27,7 +27,7 @@ func _apply_stats() -> void:
 	_damagebox.collision_mask = laser_stats.collision_mask
 	_speed = laser_stats.speed
 
-func _on_deal_damage_event(damage: int, hitbox: HitboxComponent) -> void:
+func _on_deal_damage_event(damage: int, hitbox: Hitbox2DComponent) -> void:
 	_destroy()
 
 func _destroy() -> void:

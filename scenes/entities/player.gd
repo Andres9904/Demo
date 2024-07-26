@@ -10,8 +10,10 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	_shoot()
-	_move()
 	
+func _physics_process(delta: float) -> void:
+	_move()
+
 func _move() -> void:
 	var new_velocity := Vector2()
 	if Input.is_action_pressed("move_left"):

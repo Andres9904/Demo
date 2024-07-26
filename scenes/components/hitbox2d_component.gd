@@ -1,4 +1,4 @@
-class_name HitboxComponent extends Area2D
+class_name Hitbox2DComponent extends Area2D
 
 @export var _health_component:HealthComponent
 
@@ -9,8 +9,8 @@ func takeDamage(damage:int, source) -> void:
 		_health_component.health -= damage
 	damaged_event.emit(damage, source)
 
-static func get_hitbox_component(parent:Node, recursive:bool = false) -> HitboxComponent:
+static func get_hitbox2d_component(parent:Node, recursive:bool = false) -> Hitbox2DComponent:
 	for node in parent.get_children(recursive):
-		if node is HitboxComponent:
+		if node is Hitbox2DComponent:
 			return node
 	return null
