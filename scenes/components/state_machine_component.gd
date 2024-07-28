@@ -1,15 +1,15 @@
-class_name StateMachineComponent extends Node
+class_name StateMachComponent extends Node
 
 @export var target:Node
-@export var _initial_state: StateMachineStateComponent
+@export var _initial_state: StateMachStateComponent
 @export var _auto_start:bool
 
-var _current_state: StateMachineStateComponent
+var _current_state: StateMachStateComponent
 var _playing:bool
 
-signal state_machine_started_event(state:StateMachineStateComponent)
+signal state_machine_started_event(state:StateMachStateComponent)
 signal state_machine_stopped_event()
-signal state_changed_event(old_value:StateMachineStateComponent, new_value:StateMachineStateComponent)
+signal state_changed_event(old_value:StateMachStateComponent, new_value:StateMachStateComponent)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -23,7 +23,7 @@ func _process(delta: float) -> void:
 		_change_state(new_state)
 	
 func _physics_process(delta: float) -> void:
-	var new_state = _current_state.run_physics(delta)
+	var new_state = _current_state.run_physics_process(delta)
 	if new_state:
 		_change_state(new_state)
 		
@@ -43,12 +43,10 @@ func start() -> void:
 	
 	_playing = true
 	
-	#Set pass machine instance to states
 	for state in get_children():
-		if state is StateMachineComponent:
+		if state is StateMachStateComponent:
 			state.state_machine = self
 
-	# Initialize to the default state
 	_change_state(_initial_state)
 	state_machine_started_event.emit(_current_state)
 
@@ -61,8 +59,7 @@ func stop() -> void:
 	_change_state(_initial_state)
 	state_machine_stopped_event.emit()
 
-# Change to the new state by first calling any exit logic on the current state.
-func _change_state(new_state:StateMachineStateComponent) -> void:
+func _change_state(new_state:StateMachStateComponent) -> void:
 	if _current_state == new_state:
 		return
 	if _current_state:

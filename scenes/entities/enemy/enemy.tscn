@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://besa2l7t8hfxn"]
+[gd_scene load_steps=14 format=3 uid="uid://besa2l7t8hfxn"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemy/enemy.gd" id="1_h1ua6"]
 [ext_resource type="Script" path="res://scenes/components/hitbox2d_component.gd" id="2_yi83c"]
@@ -6,7 +6,10 @@
 [ext_resource type="Script" path="res://scenes/components/damagebox2d_component.gd" id="4_1swpu"]
 [ext_resource type="PackedScene" uid="uid://s86uepx7c75l" path="res://scenes/entities/laser_cannon.tscn" id="5_jsq2i"]
 [ext_resource type="PackedScene" uid="uid://dr6d68qgrdy2j" path="res://scenes/entities/laser.tscn" id="6_4ik8r"]
-[ext_resource type="Resource" uid="uid://u67td408whay" path="res://scripts/resources/lasers/enemy_laser_stats.tres" id="7_rhnjw"]
+[ext_resource type="Resource" uid="uid://u67td408whay" path="res://resources/lasers/enemy_laser_stats.tres" id="7_rhnjw"]
+[ext_resource type="Script" path="res://scenes/components/state_machine_component.gd" id="8_1lllw"]
+[ext_resource type="Script" path="res://scenes/entities/enemy/enemy_move_state.gd" id="9_yy67w"]
+[ext_resource type="Script" path="res://scenes/entities/enemy/enemy_fall_state.gd" id="10_8by0e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0kcr5"]
 size = Vector2(40, 40)
@@ -65,5 +68,19 @@ position = Vector2(0, 20)
 one_shot = true
 autostart = true
 
+[node name="StateMachComponent" type="Node" parent="." node_paths=PackedStringArray("target", "_initial_state")]
+script = ExtResource("8_1lllw")
+target = NodePath("..")
+_initial_state = NodePath("MoveAndShootState")
+_auto_start = true
+
+[node name="MoveAndShootState" type="Node" parent="StateMachComponent" node_paths=PackedStringArray("_fall_state")]
+script = ExtResource("9_yy67w")
+_fall_state = NodePath("../FallState")
+
+[node name="FallState" type="Node" parent="StateMachComponent" node_paths=PackedStringArray("_move_state")]
+script = ExtResource("10_8by0e")
+_move_state = NodePath("../MoveAndShootState")
+
 [connection signal="health_became_zero_event" from="HealthComponent" to="." method="_on_health_became_zero_event"]
-[connection signal="body_entered" from="BorderDetector" to="." method="_on_hit_border"]
+[connection signal="body_entered" from="BorderDetector" to="StateMachComponent/MoveAndShootState" method="_on_border_hit"]

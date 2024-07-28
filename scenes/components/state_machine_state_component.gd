@@ -1,6 +1,6 @@
-class_name StateMachineStateComponent extends Node
+class_name StateMachStateComponent extends Node
 
-var state_machine:StateMachineComponent
+var state_machine:StateMachComponent
 
 func enter() -> void:
 	pass
@@ -8,11 +8,11 @@ func enter() -> void:
 func exit() -> void:
 	pass
 
-func run_process(delta: float) -> StateMachineStateComponent:
+func run_process(delta: float) -> StateMachStateComponent:
 	return null
 
-func run_physics_process(delta: float) -> StateMachineStateComponent:
+func run_physics_process(delta: float) -> StateMachStateComponent:
 	return null
 
-func run_input(event: InputEvent) -> StateMachineStateComponent:
+func run_input(event: InputEvent) -> StateMachStateComponent:
 	return null

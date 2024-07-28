@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="LaserStats" load_steps=2 format=3 uid="uid://u67td408whay"]
 
-[ext_resource type="Script" path="res://scripts/resources/laser_stats.gd" id="1_swxq0"]
+[ext_resource type="Script" path="res://resources/laser_stats.gd" id="1_swxq0"]
 
 [resource]
 script = ExtResource("1_swxq0")
