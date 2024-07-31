@@ -68,10 +68,10 @@ position = Vector2(0, 20)
 one_shot = true
 autostart = true
 
-[node name="StateMachComponent" type="Node" parent="." node_paths=PackedStringArray("target", "_initial_state")]
+[node name="StateMachComponent" type="Node" parent="." node_paths=PackedStringArray("subject", "idle_state")]
 script = ExtResource("8_1lllw")
-target = NodePath("..")
-_initial_state = NodePath("MoveAndShootState")
+subject = NodePath("..")
+idle_state = NodePath("MoveAndShootState")
 _auto_start = true
 
 [node name="MoveAndShootState" type="Node" parent="StateMachComponent" node_paths=PackedStringArray("_fall_state")]

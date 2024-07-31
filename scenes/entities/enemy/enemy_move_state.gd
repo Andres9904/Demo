@@ -7,8 +7,8 @@ extends StateMachStateComponent
 var enemy:Enemy
 var fall:bool
 
-func enter() -> void:
-	enemy = state_machine.target
+func enter(previous_state:StateMachStateComponent) -> void:
+	enemy = state_machine.subject
 	fall = false
 	_shoot_delay.start()
 	var rand = RandomNumberGenerator.new()

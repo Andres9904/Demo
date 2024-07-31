@@ -3,7 +3,7 @@
 # meta-default: true
 extends _BASE_
 
-func enter() -> void:
+func enter(previous_state:StateMachStateComponent) -> void:
 _TS_pass
 
 func exit() -> void:

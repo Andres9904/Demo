@@ -5,8 +5,8 @@ extends StateMachStateComponent
 var enemy:Enemy
 var _can_move = false
 
-func enter() -> void:
-	enemy = state_machine.target
+func enter(previous_state:StateMachStateComponent) -> void:
+	enemy = state_machine.subject
 	_can_move = false
 	var tween := get_tree().create_tween()
 	tween.tween_callback(_stop_fall)
